@@ -1,13 +1,14 @@
 package com.example.CapExpress.model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.boot.autoconfigure.web.WebProperties;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,6 +16,7 @@ import org.springframework.boot.autoconfigure.web.WebProperties;
 @Setter
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Builder
 public class Driver {
 
     @Id
@@ -25,7 +27,16 @@ public class Driver {
 
     int age;
 
+    @Column(unique = true)
     long mobNo;
+
+    @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL)
+    List<Booking> bookings = new ArrayList<>();
+
+
+    @OneToOne(mappedBy = "driver", cascade = CascadeType.ALL)
+    @JsonIgnore
+    Cab cab;
 
 
 }
