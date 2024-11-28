@@ -14,6 +14,7 @@ import lombok.experimental.FieldDefaults;
 @Setter
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Builder
 public class Coupon {
 
     @Id
